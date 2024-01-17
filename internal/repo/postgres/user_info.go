@@ -3,17 +3,18 @@ package postgres
 import (
 	"arch/internal/models"
 	"arch/internal/repo"
+	"arch/pkg/logger"
 	"context"
 	"database/sql"
-	"log"
+
 )
 
 type userInfoRepository struct {
 	db  *sql.DB
-	log log.Logger
+	log logger.Logger
 }
 
-func NewUserInfoRepository(db *sql.DB, log log.Logger) repo.IUserInfoRepository {
+func NewUserInfoRepository(db *sql.DB, log logger.Logger) repo.IUserInfoRepository {
 	return &userInfoRepository{
 		db:  db,
 		log: log,
@@ -33,7 +34,7 @@ func (r *userInfoRepository) CreateUserInfo(ctx context.Context, info *models.Us
 		info.Gender,
 	).Scan(&info.Id)
 	if err != nil {
-		//r.log.Error("repo.create.user error:",err)
+		r.log.Error("repo.create.user error:",err)
 		return err
 	}
 	return nil
