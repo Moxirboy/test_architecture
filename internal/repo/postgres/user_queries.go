@@ -18,5 +18,8 @@ SELECT id ,password FROM users WHERE email=$1
 		deleteUserById=`
 UPDATE users SET is_active=false ,deleted_at=current_timestamp WHERE id=$1
 `
-		
+		updateIsVerified=`
+UPDATE users SET is_email_verified=true WHERE id=$1
+`
+
 )
